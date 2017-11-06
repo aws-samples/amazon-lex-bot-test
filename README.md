@@ -1,2 +1,5 @@
-# amazon-lex-bot-test
-Script to test an Amazon Lex bot using the Amazon Lex Runtime API.
+Amazon Lex Bot Test
+
+## License
+
+This library is licensed under the Amazon Software License.
