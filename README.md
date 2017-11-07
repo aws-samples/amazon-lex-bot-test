@@ -15,6 +15,8 @@ The user must have [IAM permissions](http://docs.aws.amazon.com/lex/latest/dg/ac
 $ node testlexbot.js <TestConfigFile>
 # examples:
 # node testlexbot.js test/CoffeeBot-main.json
+# node testlexbot.js test/CoffeeBot-main.json 2>&1 > results.txt
+# node testlexbot.js test/CoffeeBot-main.json 2>&1 > results.txt && ./bin/summarizeResults.sh results.txt
 ```
 
 ## License
