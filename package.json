@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Amazon.com, Inc.",
   "license": "Amazon Software License",
   "dependencies": {
-    "aws-sdk": "^2.82.0"
+    "aws-sdk": "^2.120.0"
   }
 }
