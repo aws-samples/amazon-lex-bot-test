@@ -1,0 +1,140 @@
+{
+	"name": "CoffeeBot-main",
+	"description": "Regression tests for the coffee bot",
+	"botName": "CoffeeBotJ",
+	"botAlias": "BETA",
+	"waitBetweenRequestsMillis":  0,
+	"sequences": [
+		{
+			"name": "Place-Order",
+			"description": "Order a small mocha (type, size, temperature)",
+			"sequence": [
+				{
+					"utterance": "Can I get a mocha",
+					"postConditions": {
+						"message": ["What size\\? small, medium, large\\?", "How big\\?"]
+					}
+				},
+				{
+					"utterance": "small",
+					"postConditions": {
+						"message": ["Would you like that iced or hot\\?"]
+					}
+				},
+				{
+					"utterance": "hot",
+					"postConditions": {
+						"message": ["You'd like me to order a small mocha. Is that right\\?"]
+					}
+				},
+				{
+					"utterance": "yeah",
+					"postConditions": {
+						"message": ["Thanks for using the CoffeeBot!"]
+					}
+				}]
+		},
+		{
+			"name": "Place-Order-2",
+			"description": "Order a small mocha (type/size, temperature)",
+			"sequence": [
+				{
+					"utterance": "Can I get a tall mocha",
+					"postConditions": {
+						"message": ["Would you like that iced or hot\\?"]
+					}
+				},
+				{
+					"utterance": "iced",
+					"postConditions": {
+						"message": ["You'd like me to order a tall mocha. Is that right\\?"]
+					}
+				},
+				{
+					"utterance": "yeah",
+					"postConditions": {
+						"message": ["Thanks for using the CoffeeBot!"]
+					}
+				}]
+		},
+		{
+			"name": "Check-For-Correction",
+			"description": "Is a size correction accepted at confirmation?",
+			"sequence": [
+				{
+					"utterance": "Can I get a small mocha",
+					"postConditions": {
+						"message": ["Would you like that iced or hot\\?"]
+					}
+				},
+				{
+					"utterance": "hot",
+					"postConditions": {
+						"message": ["You'd like me to order a small mocha. Is that right\\?"]
+					}
+				},
+				{
+					"utterance": "Let's make it a large mocha",
+					"postConditions": {
+						"intentName":  "CafeOrderBeverageIntentJ",
+						"slots": [
+							{ "slotName":  "BeverageSize", "slotValue":  "large" },
+							{ "slotName":  "BeverageType", "slotValue":  "mocha" },
+							{ "slotName":  "BeverageTemp", "slotValue":  "hot" }
+						]
+					}
+				}]
+		},
+		{
+			"name": "Place-Corrected-Order",
+			"description": "Place an order with a correction",
+			"sequence": [
+				{
+					"utterance": "Can I get a mocha",
+					"postConditions": {
+						"message": ["What size\\? small, medium, large\\?", "How big\\?"]
+					}
+				},
+				{
+					"utterance": "small",
+					"postConditions": {
+						"message": ["Would you like that iced or hot\\?"]
+					}
+				},
+				{
+					"utterance": "iced",
+					"postConditions": {
+						"message": ["You'd like me to order a small mocha. Is that right\\?"]
+					}
+				},
+				{
+					"utterance": "Let's make it a large mocha",
+					"postConditions": {
+						"message": ["You'd like me to order a large mocha. Is that right\\?"]
+					}
+				},
+				{
+					"utterance": "yep",
+					"postConditions": {
+						"message": ["Thanks for using the CoffeeBot!"]
+					}
+				}]
+		},
+		{
+			"name": "Check-Off-Menu-Error",
+			"description": "Confirm error message for off menu item",
+			"sequence": [
+				{
+					"utterance": "I would like an espresso",
+					"postConditions": {
+						"message": ["Sorry, but we can only make .*"]
+					}
+				},
+				{
+					"utterance": "mocha",
+					"postConditions": {
+						"message": ["What size\\? small, medium, large\\?", "How big\\?"]
+					}
+				}]
+		}]
+	}

@@ -1,0 +1,14 @@
+{
+  "name": "testlexbot",
+  "version": "1.0.0",
+  "description": "This script can be used to regression test an Amazon Lex bot.  It relies on the AWS SDK and the Amazon Lex Runtime Service API.",
+  "main": "testlexbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Amazon Software License",
+  "dependencies": {
+    "aws-sdk": "^2.82.0"
+  }
+}
