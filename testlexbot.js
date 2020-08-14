@@ -155,19 +155,6 @@ function checkDialogState(botName, botAlias, sequence, interaction, lexParams, l
 	}
 }
 
-// utility function
-function isJSON(str) {
-	if (typeof str !== 'string') return false;
-	try {
-		const result = JSON.parse(str);
-		const type = Object.prototype.toString.call(result);
-		return type === '[object Object]' || type === '[object Array]';
-	} catch (err) {
-		return false;
-	}
-}
-
-
 function checkResponseMessage(botName, botAlias, sequence, interaction, lexParams, lexResponse, requestId) {
 	let responses = [];
 	let succeeded = true;
@@ -188,7 +175,7 @@ function checkResponseMessage(botName, botAlias, sequence, interaction, lexParam
 	// check if the response is in the list of acceptableResponses
 	let k = 0;
 	let acceptableResponse = false;
-	while (!acceptableResponse && k < postConditions.message.length) {
+	while ((!acceptableResponse) && (k < postConditions.message.length)) {
 		if (responses[k] == postConditions.message[k]) {
 			console.log(
 				`I  [${sequence.name}/${interaction.utterance}] Acceptable response found - ${lexResponse.message}`
@@ -206,6 +193,18 @@ function checkResponseMessage(botName, botAlias, sequence, interaction, lexParam
 	}
 
 	return succeeded;
+}
+
+// utility function
+function isJSON(str) {
+	if (typeof str !== 'string') return false;
+	try {
+		const result = JSON.parse(str);
+		const type = Object.prototype.toString.call(result);
+		return type === '[object Object]' || type === '[object Array]';
+	} catch (err) {
+		return false;
+	}
 }
 
 function checkPostConditions(botName, botAlias, sequence, interaction, lexParams, lexResponse, requestId) {
