@@ -21,14 +21,14 @@ $ node testlexbot.js <TestConfigFile>
 # node testlexbot.js test/CoffeeBot-main.json 2>&1 > results.txt && ./bin/summarizeResults.sh results.txt
 ```
 
+## License
+
+This sample code is made available under the MIT-0 license. See the LICENSE file.
+
 ## Updates
 
 ### August 14, 2020
 
 Changed logic to compare post condition when a Lex response has multiple messages by adding post conditions to an array and comparing against response by index.
 
-Example of the business case: [{ "Hi there" }, { "Here's more information" }, { "And more" }}
-
-## License
-
-This sample code is made available under the MIT-0 license. See the LICENSE file.
+Example of the business case: [{ "Hi there" }, { "Here's more information" }, { "And more" }]
