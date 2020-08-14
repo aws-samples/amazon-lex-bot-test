@@ -156,8 +156,18 @@ function checkDialogState(botName, botAlias, sequence, interaction, lexParams, l
 }
 
 function checkResponseMessage(botName, botAlias, sequence, interaction, lexParams, lexResponse, requestId) {
-
+	let responses = [];
 	let succeeded = true;
+
+	// if the Lex response is an object instead of a string, that means the response comes in a group of messages
+	if (isJSON(lexResponse.message)) {
+		let groupMessage = JSON.parse(lexResponse.message);
+		groupMessage.messages.forEach((msg) => {
+			responses.push(msg.value);
+		});
+	} else {
+		responses.push(lexResponse.message);
+	}
 
 	// check for our postConditions
 	let postConditions = interaction.postConditions;
@@ -165,25 +175,36 @@ function checkResponseMessage(botName, botAlias, sequence, interaction, lexParam
 	// check if the response is in the list of acceptableResponses
 	let k = 0;
 	let acceptableResponse = false;
-	while ((! acceptableResponse) && (k < postConditions.message.length)) {
-
-		if (lexResponse.message.match(postConditions.message[k])) {
-
-			console.log(`I  [${sequence.name}/${interaction.utterance}] Acceptable response found - ${lexResponse.message}`);
+	while ((!acceptableResponse) && (k < postConditions.message.length)) {
+		if (responses[k] == postConditions.message[k]) {
+			console.log(
+				`I  [${sequence.name}/${interaction.utterance}] Acceptable response found - ${lexResponse.message}`
+			);
 			acceptableResponse = true;
 		} else {
 			// console.error(`      [${postConditions.message[k]}] !~= [${lexResponse.message}]`);
 		}
 		k++;
 	}
-	if (! acceptableResponse) {
-
+	if (!acceptableResponse) {
 		succeeded = false;
 		recordFailure(botName, botAlias, sequence, lexParams, lexResponse, requestId,
 			`No acceptable response found for message [${lexResponse.message}]`);
 	}
 
 	return succeeded;
+}
+
+// utility function
+function isJSON(str) {
+	if (typeof str !== 'string') return false;
+	try {
+		const result = JSON.parse(str);
+		const type = Object.prototype.toString.call(result);
+		return type === '[object Object]' || type === '[object Array]';
+	} catch (err) {
+		return false;
+	}
 }
 
 function checkPostConditions(botName, botAlias, sequence, interaction, lexParams, lexResponse, requestId) {
